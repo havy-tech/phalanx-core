@@ -1173,14 +1173,16 @@ use Convoy\Console\CommandGroup;
 use Convoy\Console\CommandConfig;
 use Convoy\Scope;
 
-return static fn(Scope $scope): CommandGroup => new CommandGroup([
+return static fn(Scope $scope): CommandGroup => CommandGroup::of([
     'migrate' => new Command(
-        static fn(Scope $s) => $s->service(Migrator::class)->run(),
-        config: new CommandConfig(description: 'Run database migrations'),
+        fn: static fn(Scope $s) => $s->service(Migrator::class)->run(),
+        config: static fn(CommandConfig $c) => $c
+            ->withDescription('Run database migrations'),
     ),
     'db:seed' => new Command(
-        static fn(Scope $s) => $s->service(Seeder::class)->run(),
-        config: new CommandConfig(description: 'Seed the database'),
+        fn: static fn(Scope $s) => $s->service(Seeder::class)->run(),
+        config: static fn(CommandConfig $c) => $c
+            ->withDescription('Seed the database'),
     ),
 ]);
 ```

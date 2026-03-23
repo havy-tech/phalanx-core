@@ -198,10 +198,10 @@ The behavior pipeline applies automatically: **timeout wraps retry wraps trace w
 
 | Method | Behavior | Returns |
 |--------|----------|---------|
-| `concurrent($tasks)` | Run all in parallel, wait for all | Array of results |
+| `concurrent($tasks)` | Run all concurrently, wait for all | Array of results |
 | `race($tasks)` | First to settle (success or failure) | Single result |
 | `any($tasks)` | First success (ignores failures) | Single result |
-| `map($items, $fn, $limit)` | Bounded parallelism over collection | Array of results |
+| `map($items, $fn, $limit)` | Bounded concurrency over collection | Array of results |
 | `settle($tasks)` | Run all, collect outcomes including failures | SettlementBag |
 | `timeout($seconds, $task)` | Run with deadline | Result or throws |
 | `series($tasks)` | Sequential execution | Array of results |
@@ -210,7 +210,7 @@ The behavior pipeline applies automatically: **timeout wraps retry wraps trace w
 ```php
 <?php
 
-// Parallel fetch
+// Concurrent fetch
 [$customer, $inventory] = $scope->concurrent([
     new FetchCustomer($customerId),
     new ValidateInventory($items),
@@ -262,12 +262,10 @@ return static fn(Scope $s): RouteGroup => RouteGroup::of([
 ```php
 <?php
 
-use Convoy\Handler\HandlerLoader;
-use Convoy\Runner\HttpRunner;
+use Convoy\Http\Runner;
 
-$routes = HandlerLoader::loadRouteDirectory(__DIR__ . '/routes', $app->scope());
 $runner = Runner::from($app, requestTimeout: 30.0)
-    ->withRoutes($routes);
+    ->withRoutes(__DIR__ . '/routes');
 $runner->run('0.0.0.0:8080');
 ```
 
@@ -299,13 +297,15 @@ use Convoy\Scope;
 return static fn(Scope $s): CommandGroup => CommandGroup::of([
     'migrate' => new Command(
         fn: static fn(CommandScope $cs) => $cs->service(Migrator::class)->run(),
-        config: new CommandConfig(description: 'Run database migrations'),
+        config: static fn(CommandConfig $c) => $c
+            ->withDescription('Run database migrations'),
     ),
     'db:seed' => new Command(
         fn: static fn(CommandScope $cs) => $cs->service(Seeder::class)->run(
             $cs->options->flag('fresh')
         ),
-        config: (new CommandConfig(description: 'Seed the database'))
+        config: static fn(CommandConfig $c) => $c
+            ->withDescription('Seed the database')
             ->withOption('fresh', shorthand: 'f', description: 'Truncate tables first'),
     ),
 ]);
@@ -316,11 +316,9 @@ return static fn(Scope $s): CommandGroup => CommandGroup::of([
 ```php
 <?php
 
-use Convoy\Handler\HandlerLoader;
-use Convoy\Runner\ConsoleRunner;
+use Convoy\Console\ConsoleRunner;
 
-$commands = HandlerLoader::loadCommandDirectory(__DIR__ . '/commands', $app->scope());
-$runner = ConsoleRunner::withCommands($app, $commands);
+$runner = ConsoleRunner::withCommands($app, __DIR__ . '/commands');
 exit($runner->run($argv));
 ```
 

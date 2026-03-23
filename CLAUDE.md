@@ -136,7 +136,7 @@ final class DoWork implements Scopeable {
 }
 
 // Invokable class - Executable for concurrency primitives
-final class DoParallelWork implements Executable {
+final class DoConcurrentWork implements Executable {
     public function __invoke(ExecutionScope $scope): mixed {
         return $scope->concurrent([...]);
     }
@@ -181,7 +181,7 @@ class AppBundle implements ServiceBundle {
 | `src/ExecutionScope.php` | Full execution interface |
 | `src/ExecutionLifecycleScope.php` | Concrete implementation |
 | `src/Application.php` | App bootstrap, createScope() |
-| `src/Handler/HandlerLoader.php` | loadRouteDirectory(), loadCommandDirectory() |
+| `src/Handler/HandlerLoader.php` | load(), loadDirectory() - file-based handler discovery |
 | `src/Runner/HttpRunner.php` | ReactPHP HTTP server |
 | `src/Runner/ConsoleRunner.php` | CLI dispatch |
 | `src/Task/Task.php` | Task::of() factory |

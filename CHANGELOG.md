@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`LazySequence`** - Generator-based streaming
   - `from(Closure)`, `of(iterable)` constructors
   - `map()`, `filter()`, `take()`, `chunk()` transforms
-  - `mapConcurrent()` for bounded parallel processing
+  - `mapConcurrent()` for bounded concurrent processing
   - Terminal operations: `collect()`, `reduce()`, `first()`
 
 - **`Transform`** - Input + transformer composition
