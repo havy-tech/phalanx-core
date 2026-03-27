@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Task;
+namespace Phalanx\Task;
 
-use Convoy\ExecutionScope;
+use Phalanx\ExecutionScope;
 
 /**
  * Task requiring full execution capabilities.

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy;
+namespace Phalanx;
 
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Service\ServiceBundle;
-use Convoy\Trace\Trace;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Service\ServiceBundle;
+use Phalanx\Trace\Trace;
 
 interface AppHost
 {

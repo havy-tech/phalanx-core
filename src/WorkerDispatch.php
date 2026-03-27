@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Convoy;
+namespace Phalanx;
 
-use Convoy\Task\Executable;
-use Convoy\Task\Scopeable;
+use Phalanx\Task\Executable;
+use Phalanx\Task\Scopeable;
 
 interface WorkerDispatch
 {

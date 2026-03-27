@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Convoy;
+namespace Phalanx;
 
 use Closure;
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Concurrency\RetryPolicy;
-use Convoy\Concurrency\SettlementBag;
-use Convoy\Stream\Contract\StreamContext;
-use Convoy\Task\Executable;
-use Convoy\Task\Scopeable;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Concurrency\RetryPolicy;
+use Phalanx\Concurrency\SettlementBag;
+use Phalanx\Stream\Contract\StreamContext;
+use Phalanx\Task\Executable;
+use Phalanx\Task\Scopeable;
 
 /**
  * Execution scope with concurrency primitives, cancellation, and disposal.

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Service;
+namespace Phalanx\Service;
 
-use Convoy\Exception\CyclicDependencyException;
-use Convoy\Exception\InvalidServiceConfigurationException;
-use Convoy\Middleware\ConditionalTransformationMiddleware;
+use Phalanx\Exception\CyclicDependencyException;
+use Phalanx\Exception\InvalidServiceConfigurationException;
+use Phalanx\Middleware\ConditionalTransformationMiddleware;
 
 final class ServiceGraphCompiler
 {
     /**
-     * @param list<\Convoy\Middleware\ServiceTransformationMiddleware> $middleware
+     * @param list<\Phalanx\Middleware\ServiceTransformationMiddleware> $middleware
      * @param array<string, mixed> $context
      */
     public function compile(
@@ -51,7 +51,7 @@ final class ServiceGraphCompiler
         return new ServiceGraph($services, $catalog->aliases(), $configs);
     }
 
-    /** @param list<\Convoy\Middleware\ServiceTransformationMiddleware> $middleware */
+    /** @param list<\Phalanx\Middleware\ServiceTransformationMiddleware> $middleware */
     private function applyMiddleware(ServiceDefinition $def, array $middleware): ServiceDefinition
     {
         foreach ($middleware as $mw) {

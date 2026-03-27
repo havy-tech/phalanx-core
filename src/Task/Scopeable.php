@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Task;
+namespace Phalanx\Task;
 
-use Convoy\Scope;
+use Phalanx\Scope;
 
 /**
  * Task requiring only service resolution and attribute access.

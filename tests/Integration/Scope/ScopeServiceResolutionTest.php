@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Scope;
+namespace Phalanx\Tests\Integration\Scope;
 
-use Convoy\Application;
-use Convoy\Tests\Support\Fixtures\CountingService;
-use Convoy\Tests\Support\Fixtures\DisposalTracker;
-use Convoy\Tests\Support\Fixtures\Logger;
-use Convoy\Tests\Support\Fixtures\ScopedService;
-use Convoy\Tests\Support\Fixtures\LazyableService;
-use Convoy\Tests\Support\Fixtures\SlowService;
-use Convoy\Tests\Support\Fixtures\TrackedServiceA;
-use Convoy\Tests\Support\Fixtures\TrackedServiceB;
-use Convoy\Tests\Support\Fixtures\TrackedServiceC;
-use Convoy\Tests\Support\TestServiceBundle;
+use Phalanx\Application;
+use Phalanx\Tests\Support\Fixtures\CountingService;
+use Phalanx\Tests\Support\Fixtures\DisposalTracker;
+use Phalanx\Tests\Support\Fixtures\Logger;
+use Phalanx\Tests\Support\Fixtures\ScopedService;
+use Phalanx\Tests\Support\Fixtures\LazyableService;
+use Phalanx\Tests\Support\Fixtures\SlowService;
+use Phalanx\Tests\Support\Fixtures\TrackedServiceA;
+use Phalanx\Tests\Support\Fixtures\TrackedServiceB;
+use Phalanx\Tests\Support\Fixtures\TrackedServiceC;
+use Phalanx\Tests\Support\TestServiceBundle;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Handler;
+namespace Phalanx\Handler;
 
-use Convoy\ExecutionScope;
+use Phalanx\ExecutionScope;
 
 interface HandlerMatcher
 {

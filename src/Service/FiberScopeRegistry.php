@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Service;
+namespace Phalanx\Service;
 
-use Convoy\ExecutionScope;
+use Phalanx\ExecutionScope;
 use Fiber;
 use WeakMap;
 

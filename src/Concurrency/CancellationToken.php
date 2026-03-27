@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Concurrency;
+namespace Phalanx\Concurrency;
 
 use Closure;
-use Convoy\Exception\CancelledException;
+use Phalanx\Exception\CancelledException;
 use React\EventLoop\Loop;
 use React\EventLoop\TimerInterface;
 

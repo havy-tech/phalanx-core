@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Handler;
+namespace Phalanx\Handler;
 
 use Closure;
-use Convoy\Scope;
+use Phalanx\Scope;
 use RuntimeException;
 
 /**

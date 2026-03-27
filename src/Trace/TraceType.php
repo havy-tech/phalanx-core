@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Trace;
+namespace Phalanx\Trace;
 
 enum TraceType: string
 {

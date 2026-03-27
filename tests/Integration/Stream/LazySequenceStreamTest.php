@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Stream;
+namespace Phalanx\Tests\Integration\Stream;
 
-use Convoy\Application;
-use Convoy\Task\LazySequence;
-use Convoy\Tests\Support\AsyncTestCase;
+use Phalanx\Application;
+use Phalanx\Task\LazySequence;
+use Phalanx\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class LazySequenceStreamTest extends AsyncTestCase

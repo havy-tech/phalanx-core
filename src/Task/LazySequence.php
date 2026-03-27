@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Task;
+namespace Phalanx\Task;
 
-use Convoy\ExecutionScope;
-use Convoy\Stream\Contract\Streamable;
-use Convoy\Stream\Contract\StreamContext;
-use Convoy\Stream\Contract\StreamSource;
+use Phalanx\ExecutionScope;
+use Phalanx\Stream\Contract\Streamable;
+use Phalanx\Stream\Contract\StreamContext;
+use Phalanx\Stream\Contract\StreamSource;
 use Generator;
 
 use function React\Async\async;
@@ -248,9 +248,9 @@ final class LazySequence implements StreamSource, Executable
 
     public function toArray(): Executable
     {
-        $terminal = new \Convoy\Stream\Terminal\Collect($this);
+        $terminal = new \Phalanx\Stream\Terminal\Collect($this);
         return new readonly class ($terminal) implements Executable {
-            public function __construct(private \Convoy\Stream\Terminal\Collect $terminal)
+            public function __construct(private \Phalanx\Stream\Terminal\Collect $terminal)
             {
             }
             public function __invoke(ExecutionScope $scope): array
@@ -262,9 +262,9 @@ final class LazySequence implements StreamSource, Executable
 
     public function reduce(callable $fn, mixed $initial = null): Executable
     {
-        $terminal = new \Convoy\Stream\Terminal\Reduce($this, $fn(...), $initial);
+        $terminal = new \Phalanx\Stream\Terminal\Reduce($this, $fn(...), $initial);
         return new readonly class ($terminal) implements Executable {
-            public function __construct(private \Convoy\Stream\Terminal\Reduce $terminal)
+            public function __construct(private \Phalanx\Stream\Terminal\Reduce $terminal)
             {
             }
             public function __invoke(ExecutionScope $scope): mixed
@@ -276,9 +276,9 @@ final class LazySequence implements StreamSource, Executable
 
     public function first(): Executable
     {
-        $terminal = new \Convoy\Stream\Terminal\First($this);
+        $terminal = new \Phalanx\Stream\Terminal\First($this);
         return new readonly class ($terminal) implements Executable {
-            public function __construct(private \Convoy\Stream\Terminal\First $terminal)
+            public function __construct(private \Phalanx\Stream\Terminal\First $terminal)
             {
             }
             public function __invoke(ExecutionScope $scope): mixed
@@ -290,9 +290,9 @@ final class LazySequence implements StreamSource, Executable
 
     public function consume(): Executable
     {
-        $terminal = new \Convoy\Stream\Terminal\Drain($this);
+        $terminal = new \Phalanx\Stream\Terminal\Drain($this);
         return new readonly class ($terminal) implements Executable {
-            public function __construct(private \Convoy\Stream\Terminal\Drain $terminal)
+            public function __construct(private \Phalanx\Stream\Terminal\Drain $terminal)
             {
             }
             public function __invoke(ExecutionScope $scope): null

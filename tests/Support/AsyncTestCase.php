@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Support;
+namespace Phalanx\Tests\Support;
 
 use PHPUnit\Framework\TestCase;
 

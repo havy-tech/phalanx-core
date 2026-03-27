@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\ServiceGraph;
+namespace Phalanx\Tests\Integration\ServiceGraph;
 
-use Convoy\Exception\CyclicDependencyException;
-use Convoy\Service\ServiceCatalog;
-use Convoy\Service\ServiceGraphCompiler;
-use Convoy\Tests\Support\Fixtures\ServiceA;
-use Convoy\Tests\Support\Fixtures\ServiceB;
-use Convoy\Tests\Support\Fixtures\ServiceC;
-use Convoy\Tests\Support\Fixtures\ServiceD;
-use Convoy\Tests\Support\Fixtures\ServiceE;
+use Phalanx\Exception\CyclicDependencyException;
+use Phalanx\Service\ServiceCatalog;
+use Phalanx\Service\ServiceGraphCompiler;
+use Phalanx\Tests\Support\Fixtures\ServiceA;
+use Phalanx\Tests\Support\Fixtures\ServiceB;
+use Phalanx\Tests\Support\Fixtures\ServiceC;
+use Phalanx\Tests\Support\Fixtures\ServiceD;
+use Phalanx\Tests\Support\Fixtures\ServiceE;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

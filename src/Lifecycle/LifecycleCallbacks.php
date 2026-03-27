@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Lifecycle;
+namespace Phalanx\Lifecycle;
 
 use Closure;
 

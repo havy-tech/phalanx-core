@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\ServiceGraph;
+namespace Phalanx\Tests\Integration\ServiceGraph;
 
-use Convoy\Exception\InvalidServiceConfigurationException;
-use Convoy\Service\ServiceCatalog;
-use Convoy\Service\ServiceGraphCompiler;
-use Convoy\Tests\Support\Fixtures\Logger;
-use Convoy\Tests\Support\Fixtures\ScopedService;
-use Convoy\Tests\Support\Fixtures\SingletonWithScopedDep;
+use Phalanx\Exception\InvalidServiceConfigurationException;
+use Phalanx\Service\ServiceCatalog;
+use Phalanx\Service\ServiceGraphCompiler;
+use Phalanx\Tests\Support\Fixtures\Logger;
+use Phalanx\Tests\Support\Fixtures\ScopedService;
+use Phalanx\Tests\Support\Fixtures\SingletonWithScopedDep;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

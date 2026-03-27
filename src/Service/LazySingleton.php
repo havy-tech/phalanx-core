@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Service;
+namespace Phalanx\Service;
 
-use Convoy\Support\ErrorHandler;
-use Convoy\Trace\Trace;
-use Convoy\Trace\TraceType;
+use Phalanx\Support\ErrorHandler;
+use Phalanx\Trace\Trace;
+use Phalanx\Trace\TraceType;
 
 final class LazySingleton
 {

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Support;
+namespace Phalanx\Support;
 
 use Closure;
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Concurrency\RetryPolicy;
-use Convoy\Concurrency\SettlementBag;
-use Convoy\ExecutionScope;
-use Convoy\Task\Executable;
-use Convoy\Task\Scopeable;
-use Convoy\Trace\Trace;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Concurrency\RetryPolicy;
+use Phalanx\Concurrency\SettlementBag;
+use Phalanx\ExecutionScope;
+use Phalanx\Task\Executable;
+use Phalanx\Task\Scopeable;
+use Phalanx\Trace\Trace;
 
 /**
  * Delegates all ExecutionScope methods to an inner scope.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Concurrency;
+namespace Phalanx\Concurrency;
 
 use RuntimeException;
 use Throwable;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Service;
+namespace Phalanx\Service;
 
 use Closure;
-use Convoy\Support\ClassNames;
-use Convoy\Trace\Trace;
-use Convoy\Trace\TraceType;
+use Phalanx\Support\ClassNames;
+use Phalanx\Trace\Trace;
+use Phalanx\Trace\TraceType;
 use ReflectionClass;
 
 final class LazyFactory

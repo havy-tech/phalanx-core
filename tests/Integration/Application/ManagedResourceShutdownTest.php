@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Application;
+namespace Phalanx\Tests\Integration\Application;
 
-use Convoy\Application;
-use Convoy\Task\ManagedResource;
-use Convoy\Tests\Support\TestServiceBundle;
+use Phalanx\Application;
+use Phalanx\Task\ManagedResource;
+use Phalanx\Tests\Support\TestServiceBundle;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

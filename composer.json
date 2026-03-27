@@ -1,5 +1,5 @@
 {
-    "name": "convoy/core",
+    "name": "phalanx/core",
     "description": "Expression-based async coordination for PHP 8.4+",
     "license": "MIT",
     "type": "library",
@@ -12,7 +12,7 @@
         "parallel",
         "event-loop"
     ],
-    "homepage": "https://github.com/havy-tech/convoy-core",
+    "homepage": "https://github.com/havy-tech/phalanx-core",
     "authors": [
         {
             "name": "Jonathan Havens",
@@ -26,9 +26,9 @@
         "react/promise": "^3.2"
     },
     "require-dev": {
-        "convoy/console": "^1.0",
-        "convoy/http": "^1.0",
-        "convoy/parallel": "^1.0",
+        "phalanx/console": "^1.0",
+        "phalanx/http": "^1.0",
+        "phalanx/parallel": "^1.0",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.0",
         "react/promise-timer": "^1.11",
@@ -44,10 +44,10 @@
         "test": "php vendor/bin/phpunit"
     },
     "suggest": {
-        "convoy/stream": "Reactive stream primitives (Emitter, ScopedStream, Channel)",
-        "convoy/console": "CLI application framework",
-        "convoy/http": "HTTP server framework",
-        "convoy/parallel": "Worker process parallelism",
+        "phalanx/stream": "Reactive stream primitives (Emitter, ScopedStream, Channel)",
+        "phalanx/console": "CLI application framework",
+        "phalanx/http": "HTTP server framework",
+        "phalanx/parallel": "Worker process parallelism",
         "react/http": "Required for HttpRunner",
         "spatie/backtrace": "Enhanced stack traces",
         "symfony/runtime": "For symfony/runtime integration",
@@ -55,12 +55,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Convoy\\": "src/"
+            "Phalanx\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Convoy\\Tests\\": "tests/"
+            "Phalanx\\Tests\\": "tests/"
         },
         "classmap": [
             "tests/Support/Fixtures/"

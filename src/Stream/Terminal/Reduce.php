@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Stream\Terminal;
+namespace Phalanx\Stream\Terminal;
 
-use Convoy\Stream\Contract\StreamContext;
-use Convoy\Stream\Contract\StreamSource;
+use Phalanx\Stream\Contract\StreamContext;
+use Phalanx\Stream\Contract\StreamSource;
 
 final readonly class Reduce
 {

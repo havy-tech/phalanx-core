@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Handler;
+namespace Phalanx\Tests\Integration\Handler;
 
-use Convoy\Application;
-use Convoy\ExecutionScope;
-use Convoy\Handler\Handler;
-use Convoy\Handler\HandlerGroup;
-use Convoy\Handler\HandlerMatcher;
-use Convoy\Handler\MatchResult;
-use Convoy\Task\Task;
+use Phalanx\Application;
+use Phalanx\ExecutionScope;
+use Phalanx\Handler\Handler;
+use Phalanx\Handler\HandlerGroup;
+use Phalanx\Handler\HandlerMatcher;
+use Phalanx\Handler\MatchResult;
+use Phalanx\Task\Task;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

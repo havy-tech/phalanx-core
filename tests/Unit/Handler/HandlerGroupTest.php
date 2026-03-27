@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Unit\Handler;
+namespace Phalanx\Tests\Unit\Handler;
 
-use Convoy\Handler\Handler;
-use Convoy\Handler\HandlerGroup;
-use Convoy\Task\Task;
+use Phalanx\Handler\Handler;
+use Phalanx\Handler\HandlerGroup;
+use Phalanx\Task\Task;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -73,7 +73,7 @@ final class HandlerGroupTest extends TestCase
             'b' => Handler::of(Task::of(static fn() => 'b')),
         ]);
 
-        $filtered = $group->filterByConfig(\Convoy\Handler\HandlerConfig::class);
+        $filtered = $group->filterByConfig(\Phalanx\Handler\HandlerConfig::class);
 
         $this->assertCount(2, $filtered);
     }

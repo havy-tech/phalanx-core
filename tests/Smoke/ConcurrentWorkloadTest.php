@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Smoke;
+namespace Phalanx\Tests\Smoke;
 
-use Convoy\Application;
-use Convoy\Concurrency\RetryPolicy;
-use Convoy\Concurrency\Settlement;
-use Convoy\Exception\CancelledException;
-use Convoy\ExecutionScope;
-use Convoy\Scope;
-use Convoy\Task\Executable;
-use Convoy\Task\HasTimeout;
-use Convoy\Task\Retryable;
-use Convoy\Task\Scopeable;
-use Convoy\Task\Task;
-use Convoy\Tests\Support\AsyncTestCase;
+use Phalanx\Application;
+use Phalanx\Concurrency\RetryPolicy;
+use Phalanx\Concurrency\Settlement;
+use Phalanx\Exception\CancelledException;
+use Phalanx\ExecutionScope;
+use Phalanx\Scope;
+use Phalanx\Task\Executable;
+use Phalanx\Task\HasTimeout;
+use Phalanx\Task\Retryable;
+use Phalanx\Task\Scopeable;
+use Phalanx\Task\Task;
+use Phalanx\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 

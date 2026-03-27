@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Cancellation;
+namespace Phalanx\Tests\Integration\Cancellation;
 
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Exception\CancelledException;
-use Convoy\Tests\Support\AsyncTestCase;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Exception\CancelledException;
+use Phalanx\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 use function React\Async\delay;

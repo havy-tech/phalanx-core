@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Trace;
+namespace Phalanx\Trace;
 
 final class TraceEntry
 {

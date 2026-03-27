@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Concurrency;
+namespace Phalanx\Concurrency;
 
-use Convoy\Exception\CancelledException;
+use Phalanx\Exception\CancelledException;
 use Throwable;
 
 final class RetryPolicy

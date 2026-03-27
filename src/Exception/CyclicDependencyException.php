@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Exception;
+namespace Phalanx\Exception;
 
 class CyclicDependencyException extends \LogicException
 {

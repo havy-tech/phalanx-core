@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Middleware;
+namespace Phalanx\Middleware;
 
-use Convoy\Service\ServiceDefinition;
+use Phalanx\Service\ServiceDefinition;
 
 interface ServiceTransformationMiddleware
 {

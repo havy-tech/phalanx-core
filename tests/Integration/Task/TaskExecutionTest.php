@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Integration\Task;
+namespace Phalanx\Tests\Integration\Task;
 
-use Convoy\Application;
-use Convoy\Concurrency\RetryPolicy;
-use Convoy\ExecutionScope;
-use Convoy\Scope;
-use Convoy\Task\Executable;
-use Convoy\Task\HasTimeout;
-use Convoy\Task\Pool;
-use Convoy\Task\Retryable;
-use Convoy\Task\Scopeable;
-use Convoy\Task\Task;
-use Convoy\Task\Traceable;
-use Convoy\Task\UsesPool;
-use Convoy\Tests\Support\AsyncTestCase;
+use Phalanx\Application;
+use Phalanx\Concurrency\RetryPolicy;
+use Phalanx\ExecutionScope;
+use Phalanx\Scope;
+use Phalanx\Task\Executable;
+use Phalanx\Task\HasTimeout;
+use Phalanx\Task\Pool;
+use Phalanx\Task\Retryable;
+use Phalanx\Task\Scopeable;
+use Phalanx\Task\Task;
+use Phalanx\Task\Traceable;
+use Phalanx\Task\UsesPool;
+use Phalanx\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class TaskExecutionTest extends AsyncTestCase
@@ -104,7 +104,7 @@ final class TaskExecutionTest extends AsyncTestCase
                 }
             };
 
-            $this->expectException(\Convoy\Exception\CancelledException::class);
+            $this->expectException(\Phalanx\Exception\CancelledException::class);
             $scope->execute($task);
         });
     }
@@ -112,7 +112,7 @@ final class TaskExecutionTest extends AsyncTestCase
     #[Test]
     public function reads_traceable_name(): void
     {
-        $app = Application::starting(['CONVOY_TRACE' => '1'])->compile();
+        $app = Application::starting(['PHALANX_TRACE' => '1'])->compile();
         $scope = $app->createScope();
 
         $task = new class implements Scopeable, Traceable {
@@ -159,7 +159,7 @@ final class TaskExecutionTest extends AsyncTestCase
     #[Test]
     public function task_with_config_applies_name(): void
     {
-        $app = Application::starting(['CONVOY_TRACE' => '1'])->compile();
+        $app = Application::starting(['PHALANX_TRACE' => '1'])->compile();
         $scope = $app->createScope();
 
         $task = Task::of(static fn() => 'named')->withConfig(name: 'ConfiguredTask');

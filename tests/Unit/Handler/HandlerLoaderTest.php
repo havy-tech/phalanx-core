@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Tests\Unit\Handler;
+namespace Phalanx\Tests\Unit\Handler;
 
-use Convoy\Handler\Handler;
-use Convoy\Handler\HandlerGroup;
-use Convoy\Handler\HandlerLoader;
-use Convoy\Task\Task;
+use Phalanx\Handler\Handler;
+use Phalanx\Handler\HandlerGroup;
+use Phalanx\Handler\HandlerLoader;
+use Phalanx\Task\Task;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -18,7 +18,7 @@ final class HandlerLoaderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixtureDir = sys_get_temp_dir() . '/convoy-handler-test-' . uniqid();
+        $this->fixtureDir = sys_get_temp_dir() . '/phalanx-handler-test-' . uniqid();
         mkdir($this->fixtureDir);
     }
 
@@ -36,9 +36,9 @@ final class HandlerLoaderTest extends TestCase
     {
         $content = <<<'PHP'
 <?php
-use Convoy\Handler\Handler;
-use Convoy\Handler\HandlerGroup;
-use Convoy\Task\Task;
+use Phalanx\Handler\Handler;
+use Phalanx\Handler\HandlerGroup;
+use Phalanx\Task\Task;
 
 return HandlerGroup::of([
     'task-a' => Handler::of(Task::of(static fn() => 'list')),

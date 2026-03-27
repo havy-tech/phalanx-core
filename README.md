@@ -1,6 +1,6 @@
-# Convoy Core - Async PHP
+# Phalanx Core - Async PHP
 
-Convoy is an async coordination library for PHP 8.4+. It replaces callbacks with typed tasks—named computations that carry their own identity, behavior, and lifecycle through a unified execution model built on ReactPHP.
+Phalanx is an async coordination library for PHP 8.4+. It replaces callbacks with typed tasks—named computations that carry their own identity, behavior, and lifecycle through a unified execution model built on ReactPHP.
 
 [Substack write up](https://open.substack.com/pub/jhavenz/p/when-php-computations-have-names)
 
@@ -29,7 +29,7 @@ Convoy is an async coordination library for PHP 8.4+. It replaces callbacks with
 ## Installation
 
 ```bash
-composer require convoy/core
+composer require phalanx/core
 ```
 
 Requires PHP 8.4+.
@@ -52,11 +52,11 @@ $scope->dispose();
 $app->shutdown();
 ```
 
-**Note:** Service classes like `OrderService`, `UserRepo`, `DatabasePool` in these examples are illustrative. Convoy Core provides the coordination primitives—your application brings the domain logic.
+**Note:** Service classes like `OrderService`, `UserRepo`, `DatabasePool` in these examples are illustrative. Phalanx Core provides the coordination primitives—your application brings the domain logic.
 
 ## How It Works
 
-Convoy's model: **Application -> Scope -> Tasks**.
+Phalanx's model: **Application -> Scope -> Tasks**.
 
 ```
 Application::starting($context)
@@ -86,7 +86,7 @@ interface Executable {
 
 ### Scope Hierarchy
 
-Convoy splits scope into two interfaces:
+Phalanx splits scope into two interfaces:
 
 | Interface | Purpose |
 |-----------|---------|
@@ -234,7 +234,7 @@ $results = $scope->map($items, fn($item) => new ProcessItem($item), limit: 10);
 ```php
 <?php
 
-use Convoy\Task\LazySequence;
+use Phalanx\Task\LazySequence;
 
 $seq = LazySequence::from(static function (ExecutionScope $scope) {
     foreach ($scope->service(OrderRepo::class)->cursor() as $order) {
@@ -266,10 +266,10 @@ Typed collections of HTTP routes with `RouteGroup`. Handler closures receive `Re
 <?php
 // routes/api.php
 
-use Convoy\Http\RequestScope;
-use Convoy\Http\Route;
-use Convoy\Http\RouteGroup;
-use Convoy\Scope;
+use Phalanx\Http\RequestScope;
+use Phalanx\Http\Route;
+use Phalanx\Http\RouteGroup;
+use Phalanx\Scope;
 
 return static fn(Scope $s): RouteGroup => RouteGroup::of([
     'GET /users' => new Route(
@@ -293,7 +293,7 @@ return static fn(Scope $s): RouteGroup => RouteGroup::of([
 ```php
 <?php
 
-use Convoy\Http\Runner;
+use Phalanx\Http\Runner;
 
 $runner = Runner::from($app, requestTimeout: 30.0)
     ->withRoutes(__DIR__ . '/routes');
@@ -319,11 +319,11 @@ Typed collections of CLI commands with `CommandGroup`. Handler closures receive 
 <?php
 // commands/db.php
 
-use Convoy\Console\Command;
-use Convoy\Console\CommandGroup;
-use Convoy\Console\CommandConfig;
-use Convoy\Console\CommandScope;
-use Convoy\Scope;
+use Phalanx\Console\Command;
+use Phalanx\Console\CommandGroup;
+use Phalanx\Console\CommandConfig;
+use Phalanx\Console\CommandScope;
+use Phalanx\Scope;
 
 return static fn(Scope $s): CommandGroup => CommandGroup::of([
     'migrate' => new Command(
@@ -347,7 +347,7 @@ return static fn(Scope $s): CommandGroup => CommandGroup::of([
 ```php
 <?php
 
-use Convoy\Console\ConsoleRunner;
+use Phalanx\Console\ConsoleRunner;
 
 $runner = ConsoleRunner::withCommands($app, __DIR__ . '/commands');
 exit($runner->run($argv));
@@ -358,8 +358,8 @@ exit($runner->run($argv));
 ```php
 <?php
 
-use Convoy\Service\ServiceBundle;
-use Convoy\Service\Services;
+use Phalanx\Service\ServiceBundle;
+use Phalanx\Service\Services;
 
 class AppBundle implements ServiceBundle
 {
@@ -388,8 +388,8 @@ class AppBundle implements ServiceBundle
 ```php
 <?php
 
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Concurrency\RetryPolicy;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Concurrency\RetryPolicy;
 
 // Timeout for entire scope
 $scope = $app->createScope(CancellationToken::timeout(30.0));
@@ -420,7 +420,7 @@ final class LongRunningTask implements Executable
 ## Tracing
 
 ```bash
-CONVOY_TRACE=1 php server.php
+PHALANX_TRACE=1 php server.php
 ```
 
 ```

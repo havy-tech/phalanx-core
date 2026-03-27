@@ -5,7 +5,7 @@ parameters:
     excludePaths:
         - src/Parallel/
         - src/Stream/
-        - src/Runtime/ConvoyRuntime.php
-        - src/Runtime/ConvoyHttpRunner.php
+        - src/Runtime/PhalanxRuntime.php
+        - src/Runtime/PhalanxHttpRunner.php
     tmpDir: .phpstan-cache
     treatPhpDocTypesAsCertain: false

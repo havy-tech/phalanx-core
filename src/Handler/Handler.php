@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Handler;
+namespace Phalanx\Handler;
 
-use Convoy\Task\Executable;
-use Convoy\Task\Scopeable;
+use Phalanx\Task\Executable;
+use Phalanx\Task\Scopeable;
 
 final readonly class Handler
 {

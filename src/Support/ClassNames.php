@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Support;
+namespace Phalanx\Support;
 
 final class ClassNames
 {

@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Convoy;
+namespace Phalanx;
 
 use Closure;
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Concurrency\RetryPolicy;
-use Convoy\Concurrency\Settlement;
-use Convoy\Concurrency\SettlementBag;
-use Convoy\Middleware\TaskMiddleware;
-use Convoy\Service\CompiledService;
-use Convoy\Service\DeferredScope;
-use Convoy\Service\FiberScopeRegistry;
-use Convoy\Service\LazyFactory;
-use Convoy\Service\LazySingleton;
-use Convoy\Service\ServiceGraph;
-use Convoy\Support\ClassNames;
-use Convoy\Support\ErrorHandler;
-use Convoy\Task\Executable;
-use Convoy\Task\HasPriority;
-use Convoy\Task\HasTimeout;
-use Convoy\Task\Retryable;
-use Convoy\Task\Scopeable;
-use Convoy\Task\TaskConfig;
-use Convoy\Task\Traceable;
-use Convoy\Task\UsesPool;
-use Convoy\Trace\Trace;
-use Convoy\Trace\TraceType;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Concurrency\RetryPolicy;
+use Phalanx\Concurrency\Settlement;
+use Phalanx\Concurrency\SettlementBag;
+use Phalanx\Middleware\TaskMiddleware;
+use Phalanx\Service\CompiledService;
+use Phalanx\Service\DeferredScope;
+use Phalanx\Service\FiberScopeRegistry;
+use Phalanx\Service\LazyFactory;
+use Phalanx\Service\LazySingleton;
+use Phalanx\Service\ServiceGraph;
+use Phalanx\Support\ClassNames;
+use Phalanx\Support\ErrorHandler;
+use Phalanx\Task\Executable;
+use Phalanx\Task\HasPriority;
+use Phalanx\Task\HasTimeout;
+use Phalanx\Task\Retryable;
+use Phalanx\Task\Scopeable;
+use Phalanx\Task\TaskConfig;
+use Phalanx\Task\Traceable;
+use Phalanx\Task\UsesPool;
+use Phalanx\Trace\Trace;
+use Phalanx\Trace\TraceType;
 use React\Promise\Deferred;
 
 use function React\Async\async;
@@ -406,7 +406,7 @@ final class ExecutionLifecycleScope implements ExecutionScope
 
         $timeoutPromise = new \React\Promise\Promise(static function ($resolve, $reject) use ($timeoutToken): void {
             $timeoutToken->onCancel(static function () use ($reject): void {
-                $reject(new \Convoy\Exception\CancelledException('Timeout exceeded'));
+                $reject(new \Phalanx\Exception\CancelledException('Timeout exceeded'));
             });
         });
 
@@ -521,7 +521,7 @@ final class ExecutionLifecycleScope implements ExecutionScope
     public function inWorker(Scopeable|Executable $task): mixed
     {
         return ($this->workerDispatch ?? throw new \RuntimeException(
-            'Worker execution requires convoy/parallel. Install it via: composer require convoy/parallel'
+            'Worker execution requires phalanx/parallel. Install it via: composer require phalanx/parallel'
         ))->inWorker($task, $this);
     }
 
@@ -597,7 +597,7 @@ final class ExecutionLifecycleScope implements ExecutionScope
 
         $timeoutPromise = new \React\Promise\Promise(static function ($_, $reject) use ($timeoutToken): void {
             $timeoutToken->onCancel(static function () use ($reject): void {
-                $reject(new \Convoy\Exception\CancelledException('Timeout exceeded'));
+                $reject(new \Phalanx\Exception\CancelledException('Timeout exceeded'));
             });
         });
 

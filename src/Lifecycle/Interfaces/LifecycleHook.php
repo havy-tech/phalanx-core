@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Convoy\Lifecycle\Interfaces;
+namespace Phalanx\Lifecycle\Interfaces;
 
-use Convoy\Lifecycle\LifecyclePhase;
+use Phalanx\Lifecycle\LifecyclePhase;
 
 interface LifecycleHook
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Convoy;
+namespace Phalanx;
 
-use Convoy\Concurrency\CancellationToken;
-use Convoy\Middleware\TaskMiddleware;
-use Convoy\Service\LazySingleton;
-use Convoy\Service\ServiceBundle;
-use Convoy\Service\ServiceGraph;
-use Convoy\Task\ManagedResource;
-use Convoy\Trace\Trace;
+use Phalanx\Concurrency\CancellationToken;
+use Phalanx\Middleware\TaskMiddleware;
+use Phalanx\Service\LazySingleton;
+use Phalanx\Service\ServiceBundle;
+use Phalanx\Service\ServiceGraph;
+use Phalanx\Task\ManagedResource;
+use Phalanx\Trace\Trace;
 
 final class Application implements AppHost
 {
