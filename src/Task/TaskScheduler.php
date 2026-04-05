@@ -9,7 +9,6 @@ use SplPriorityQueue;
 use WeakMap;
 
 use function React\Async\async;
-use function React\Async\await;
 use function React\Promise\race;
 
 final class TaskScheduler implements Executable
@@ -40,7 +39,6 @@ final class TaskScheduler implements Executable
     private function processQueue(ExecutionScope $scope): void
     {
         $pending = [];
-
         while (!$this->queue->isEmpty() || !empty($pending)) {
             while (!$this->queue->isEmpty()) {
                 /** @var array{task: Scopeable|Executable, index: int} $item */
@@ -68,7 +66,14 @@ final class TaskScheduler implements Executable
                 $pending[] = [
                     'pool' => $poolKey,
                     'state' => $pendingState,
-                    'promise' => async(static function () use ($scope, $task, $results, &$running, $poolKey, $pendingState): mixed {
+                    'promise' => async(static function () use (
+                        $scope,
+                        $task,
+                        $results,
+                        &$running,
+                        $poolKey,
+                        $pendingState,
+                    ): mixed {
                         try {
                             $result = $scope->execute($task);
                             $results[$task] = $result;
@@ -86,7 +91,7 @@ final class TaskScheduler implements Executable
             }
 
             $promises = array_column($pending, 'promise');
-            await(race($promises));
+            $scope->await(race($promises));
 
             $pending = array_values(array_filter(
                 $pending,

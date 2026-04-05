@@ -90,42 +90,55 @@ interface Executable {
 
 ### Scope Hierarchy
 
-Phalanx splits scope into two interfaces:
+Phalanx decomposes scope into granular capability interfaces:
 
-| Interface | Purpose |
-|-----------|---------|
-| `Scope` | Service resolution, attributes, tracing |
-| `ExecutionScope` | Extends Scope with concurrency, cancellation, disposal |
-| `CommandScope` | Decorates ExecutionScope with typed `$args` and `$options` |
-| `RequestScope` | Decorates ExecutionScope with typed `$params` and `$query` |
+```
+Scope                 service(), attribute(), trace()
+Suspendable           await(PromiseInterface): mixed
+Cancellable           isCancelled, throwIfCancelled(), cancellation()
+Disposable            onDispose(), dispose()
 
-**Scope** is the minimal interface for most code—service access and attribute passing.
+TaskScope             extends Scope + Suspendable + Cancellable + Disposable
+                      execute(), executeFresh()
 
-**ExecutionScope** adds execution capabilities: `concurrent()`, `race()`, `execute()`, `throwIfCancelled()`, `dispose()`.
+TaskExecutor          concurrent(), race(), any(), map(), settle()
+                      timeout(), retry(), delay(), defer(), singleflight(), inWorker()
+
+ExecutionScope        extends TaskScope + TaskExecutor + StreamContext
+```
+
+| Interface | Use when... |
+|-----------|------------|
+| `Scope` | You only need service resolution (file loaders, middleware) |
+| `Suspendable` | A service needs `await()` (RedisClient, TwilioRest) |
+| `TaskScope` | You compose tasks and need cancellation/disposal (handlers, middleware chains) |
+| `ExecutionScope` | You orchestrate concurrent operations (scanners, pipelines, deployment tasks) |
+
+All fiber suspension goes through `$scope->await()`. Raw `React\Async\await()` is only used inside `ExecutionLifecycleScope` internals.
 
 ```php
 <?php
 
-// Scope: minimal interface
-interface Scope {
-    public function service(string $type): object;
-    public function attribute(string $key, mixed $default = null): mixed;
-    public function withAttribute(string $key, mixed $value): Scope;
-    public function trace(): Trace;
-}
+// Services type-hint what they actually need
+final class RedisClient {
+    public function __construct(
+        private readonly Client $inner,
+        private readonly Suspendable $scope,  // only needs await()
+    ) {}
 
-// ExecutionScope: full execution capabilities
-interface ExecutionScope extends Scope {
-    public bool $isCancelled { get; }
-    public function execute(Scopeable|Executable $task): mixed;
-    public function concurrent(array $tasks): array;
-    public function throwIfCancelled(): void;
-    public function onDispose(Closure $callback): void;
-    // ... and more
+    public function get(string $key): mixed {
+        return $this->scope->await($this->inner->__call('get', [$key]));
+    }
 }
 ```
 
-Handler closures receive `ExecutionScope` for full concurrency control. File loading receives `Scope` for service resolution.
+Domain scopes extend `ExecutionScope` with typed properties:
+
+| Scope | Package | Adds |
+|-------|---------|------|
+| `CommandScope` | phalanx-console | `$args`, `$options`, `$commandName` |
+| `RequestScope` | phalanx-http | `$request`, `$params`, `$query`, `$body` |
+| `WsScope` | phalanx-ws-server | `$connection`, `$request` |
 
 ## The Task System
 
@@ -312,22 +325,20 @@ Typed collections of CLI commands with `CommandGroup`. Command handlers receive 
 <?php
 // commands/db.php
 
+use Phalanx\Console\Arg;
 use Phalanx\Console\Command;
-use Phalanx\Console\CommandConfig;
 use Phalanx\Console\CommandGroup;
-use Phalanx\Scope;
+use Phalanx\Console\Opt;
 
-return static fn(Scope $s): CommandGroup => CommandGroup::of([
+return CommandGroup::of([
     'migrate' => new Command(
         fn: new RunMigrations(),
-        config: static fn(CommandConfig $c) => $c
-            ->withDescription('Run database migrations'),
+        desc: 'Run database migrations',
     ),
     'db:seed' => new Command(
         fn: new SeedDatabase(),
-        config: static fn(CommandConfig $c) => $c
-            ->withDescription('Seed the database')
-            ->withOption('fresh', shorthand: 'f', description: 'Truncate tables first'),
+        desc: 'Seed the database',
+        opts: [Opt::flag('fresh', 'f', 'Truncate tables first')],
     ),
 ]);
 ```
@@ -426,7 +437,7 @@ PHALANX_TRACE=1 php server.php
 
 ## Authentication
 
-Phalanx provides core auth primitives that transport packages (`phalanx/http`, `phalanx/websocket`) build on.
+Phalanx provides core auth primitives that transport packages (`phalanx/http`, `phalanx/ws-server`) build on.
 
 ### Guard Interface
 

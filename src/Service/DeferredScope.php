@@ -12,6 +12,7 @@ use Phalanx\ExecutionScope;
 use Phalanx\Task\Executable;
 use Phalanx\Task\Scopeable;
 use Phalanx\Trace\Trace;
+use React\Promise\PromiseInterface;
 use RuntimeException;
 
 final class DeferredScope implements ExecutionScope
@@ -60,9 +61,9 @@ final class DeferredScope implements ExecutionScope
      * @param array<string|int, mixed> $items
      * @return array<string|int, mixed>
      */
-    public function map(array $items, Closure $fn, int $limit = 10): array
+    public function map(iterable $items, Closure $fn, int $limit = 10, ?Closure $onEach = null): array
     {
-        return $this->scope()->map($items, $fn, $limit);
+        return $this->scope()->map($items, $fn, $limit, $onEach);
     }
 
     /**
@@ -147,6 +148,11 @@ final class DeferredScope implements ExecutionScope
     public function singleflight(string $key, Scopeable|Executable $task): mixed
     {
         return $this->scope()->singleflight($key, $task);
+    }
+
+    public function await(PromiseInterface $promise): mixed
+    {
+        return $this->scope()->await($promise);
     }
 
     private function scope(): ExecutionScope

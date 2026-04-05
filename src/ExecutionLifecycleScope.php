@@ -30,6 +30,7 @@ use Phalanx\Task\UsesPool;
 use Phalanx\Trace\Trace;
 use Phalanx\Trace\TraceType;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 
 use function React\Async\async;
 use function React\Async\await;
@@ -40,6 +41,10 @@ use function React\Promise\race;
 
 final class ExecutionLifecycleScope implements ExecutionScope
 {
+    public bool $isCancelled {
+        get => $this->cancellation->isCancelled;
+    }
+
     private bool $disposed = false;
 
     /** @var list<string> */
@@ -50,10 +55,6 @@ final class ExecutionLifecycleScope implements ExecutionScope
 
     /** @var list<Closure> */
     private array $disposeCallbacks = [];
-
-    public bool $isCancelled {
-        get => $this->cancellation->isCancelled;
-    }
 
     public function __construct(
         private readonly ServiceGraph $graph,
@@ -90,7 +91,8 @@ final class ExecutionLifecycleScope implements ExecutionScope
 
         if ($compiled->singleton) {
             /** @var T */
-            return $this->singletons->get($type, fn(string $t): object => $this->service($t)); // @phpstan-ignore argument.type, argument.templateType
+            // @phpstan-ignore argument.type, argument.templateType
+            return $this->singletons->get($type, fn(string $t): object => $this->service($t));
         }
 
         if (isset($this->scopedInstances[$resolved])) {
@@ -206,7 +208,7 @@ final class ExecutionLifecycleScope implements ExecutionScope
      * @param array<string|int, mixed> $items
      * @return array<string|int, mixed>
      */
-    public function map(array $items, Closure $fn, int $limit = 10): array
+    public function map(iterable $items, Closure $fn, int $limit = 10, ?Closure $onEach = null): array
     {
         $this->throwIfCancelled();
 
@@ -231,6 +233,7 @@ final class ExecutionLifecycleScope implements ExecutionScope
             $limit,
             $execute,
             $cancellation,
+            $onEach,
         ): void {
             while (count($pending) < $limit && $index < count($keys)) {
                 $cancellation->throwIfCancelled();
@@ -247,18 +250,19 @@ final class ExecutionLifecycleScope implements ExecutionScope
                     $item,
                     $currentKey,
                     &$results,
-                    &$pending,
                     $deferred,
                     $execute,
+                    $onEach,
                 ): void {
                     try {
                         $task = $fn($item);
                         $results[$currentKey] = $execute($task);
-                        $deferred->resolve(null);
+                        if ($onEach !== null) {
+                            $onEach($results[$currentKey], $currentKey);
+                        }
+                        $deferred->resolve($currentKey);
                     } catch (\Throwable $e) {
                         $deferred->reject($e);
-                    } finally {
-                        unset($pending[$currentKey]);
                     }
                 })();
             }
@@ -270,7 +274,8 @@ final class ExecutionLifecycleScope implements ExecutionScope
             $this->throwIfCancelled();
 
             if ($pending !== []) {
-                await(race($pending));
+                $completedKey = await(race($pending));
+                unset($pending[$completedKey]);
             }
 
             $startNext();
@@ -322,33 +327,33 @@ final class ExecutionLifecycleScope implements ExecutionScope
         delay($seconds);
     }
 
+    public function await(PromiseInterface $promise): mixed
+    {
+        $this->throwIfCancelled();
+
+        $settled = false;
+        $cancellation = $this->cancellation;
+
+        $cancellationPromise = new \React\Promise\Promise(
+            static function ($_, $reject) use ($cancellation, &$settled): void {
+                $cancellation->onCancel(static function () use ($reject, &$settled): void {
+                    if (!$settled) {
+                        $reject(new \Phalanx\Exception\CancelledException());
+                    }
+                });
+            },
+        );
+
+        try {
+            return \React\Async\await(race([$promise, $cancellationPromise]));
+        } finally {
+            $settled = true;
+        }
+    }
+
     public function retry(Scopeable|Executable $task, RetryPolicy $policy): mixed
     {
-        $attempt = 0;
-        $lastException = null;
-
-        while ($attempt < $policy->attempts) {
-            $this->throwIfCancelled();
-
-            $attempt++;
-
-            try {
-                return $this->execute($task);
-            } catch (\Throwable $e) {
-                $lastException = $e;
-
-                if (!$policy->shouldRetry($e) || $attempt >= $policy->attempts) {
-                    throw $e;
-                }
-
-                $delayMs = $policy->calculateDelay($attempt);
-                $this->trace->log(TraceType::Retry, "attempt $attempt", ['delay' => $delayMs]);
-
-                $this->delay($delayMs / 1000);
-            }
-        }
-
-        throw $lastException ?? new \RuntimeException("Retry exhausted with no exception");
+        return $this->executeRetry(fn(): mixed => $this->execute($task), $policy);
     }
 
     public function settle(array $tasks): SettlementBag
@@ -541,24 +546,28 @@ final class ExecutionLifecycleScope implements ExecutionScope
     {
         $config = $this->resolveTaskConfig($task);
 
-        $work = fn(): mixed => $this->executeCore($task);
+        $executeCore = $this->executeCore(...);
+        $work = static fn(): mixed => $executeCore($task);
 
         if ($config->timeout !== null) {
             $timeout = $config->timeout;
             $inner = $work;
-            $work = fn(): mixed => $this->executeTimeout($timeout, $inner);
+            $executeTimeout = $this->executeTimeout(...);
+            $work = static fn(): mixed => $executeTimeout($timeout, $inner);
         }
 
         if ($config->retry !== null) {
             $policy = $config->retry;
             $inner = $work;
-            $work = fn(): mixed => $this->executeRetry($inner, $policy);
+            $executeRetry = $this->executeRetry(...);
+            $work = static fn(): mixed => $executeRetry($inner, $policy);
         }
 
         if ($config->trace && $config->name !== '') {
             $name = $config->name;
             $inner = $work;
-            $work = fn(): mixed => $this->traced($name, $inner);
+            $traced = $this->traced(...);
+            $work = static fn(): mixed => $traced($name, $inner);
         }
 
         return $work();
@@ -571,11 +580,12 @@ final class ExecutionLifecycleScope implements ExecutionScope
 
         $this->trace->log(TraceType::Executing, $name, task: $task);
 
-        $pipeline = fn() => $task($this);
+        $scope = $this;
+        $pipeline = static fn() => $task($scope);
 
         foreach (array_reverse($this->taskInterceptors) as $mw) {
             $next = $pipeline;
-            $pipeline = fn() => $mw->process($task, $this, $next);
+            $pipeline = static fn() => $mw->process($task, $scope, $next);
         }
 
         try {
@@ -606,7 +616,14 @@ final class ExecutionLifecycleScope implements ExecutionScope
             $this->singleflightGroup,
         );
 
-        $taskPromise = async(static fn() => $work())();
+        $taskPromise = async(function () use ($childScope, $work): mixed {
+            FiberScopeRegistry::register($childScope);
+            try {
+                return $work();
+            } finally {
+                FiberScopeRegistry::unregister();
+            }
+        })();
 
         $timeoutPromise = new \React\Promise\Promise(static function ($_, $reject) use ($timeoutToken): void {
             $timeoutToken->onCancel(static function () use ($reject): void {
@@ -711,7 +728,18 @@ final class ExecutionLifecycleScope implements ExecutionScope
         }
 
         if ($compiled->lazy) {
-            return LazyFactory::wrap($compiled->type, fn() => ($compiled->factory)(...$deps), $this->trace);
+            $lifecycle = $compiled->lifecycle;
+            return LazyFactory::wrap(
+                $compiled->type,
+                static function () use ($compiled, $deps, $lifecycle): object {
+                    $instance = ($compiled->factory)(...$deps);
+                    foreach ($lifecycle->onInit as $hook) {
+                        $hook($instance);
+                    }
+                    return $instance;
+                },
+                $this->trace,
+            );
         }
 
         $this->trace->log(TraceType::ServiceInit, $compiled->shortName());

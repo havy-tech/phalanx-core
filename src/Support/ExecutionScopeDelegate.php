@@ -12,6 +12,7 @@ use Phalanx\ExecutionScope;
 use Phalanx\Task\Executable;
 use Phalanx\Task\Scopeable;
 use Phalanx\Trace\Trace;
+use React\Promise\PromiseInterface;
 
 /**
  * Delegates all ExecutionScope methods to an inner scope.
@@ -63,9 +64,9 @@ trait ExecutionScopeDelegate
         return $this->innerScope()->any($tasks);
     }
 
-    public function map(array $items, Closure $fn, int $limit = 10): array
+    public function map(iterable $items, Closure $fn, int $limit = 10, ?Closure $onEach = null): array
     {
-        return $this->innerScope()->map($items, $fn, $limit);
+        return $this->innerScope()->map($items, $fn, $limit, $onEach);
     }
 
     /** @param list<Scopeable|Executable> $tasks */
@@ -139,6 +140,11 @@ trait ExecutionScopeDelegate
     public function singleflight(string $key, Scopeable|Executable $task): mixed
     {
         return $this->innerScope()->singleflight($key, $task);
+    }
+
+    public function await(PromiseInterface $promise): mixed
+    {
+        return $this->innerScope()->await($promise);
     }
 
     abstract protected function innerScope(): ExecutionScope;
