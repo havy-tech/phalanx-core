@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Integration\Middleware;
+namespace Convoy\Tests\Integration\Middleware;
 
-use Phalanx\Application;
-use Phalanx\Middleware\TaskMiddleware;
-use Phalanx\ExecutionScope;
-use Phalanx\Scope;
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
-use Phalanx\Task\Task;
-use Phalanx\Tests\Support\AsyncTestCase;
+use Convoy\Application;
+use Convoy\Middleware\TaskMiddleware;
+use Convoy\ExecutionScope;
+use Convoy\Scope;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
+use Convoy\Task\Task;
+use Convoy\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 

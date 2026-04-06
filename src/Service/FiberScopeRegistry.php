@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
+use Convoy\ExecutionScope;
 use Fiber;
-use Phalanx\ExecutionScope;
 use WeakMap;
 
 final class FiberScopeRegistry
@@ -13,7 +13,6 @@ final class FiberScopeRegistry
     /** @var WeakMap<object, ExecutionScope> */
     private static WeakMap $scopes;
 
-    /** Last-write-wins — only one main-thread scope active at a time. */
     private static ?ExecutionScope $mainScope = null;
 
     private static bool $initialized = false;
@@ -56,7 +55,6 @@ final class FiberScopeRegistry
             return self::$mainScope;
         }
 
-        /** Fallback: fibers spawned outside execute() lack a registered scope. */
         return self::$scopes[$fiber] ?? self::$mainScope;
     }
 

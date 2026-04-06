@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Support\Fixtures;
+namespace Convoy\Tests\Support\Fixtures;
 
 interface LoggerInterface
 {

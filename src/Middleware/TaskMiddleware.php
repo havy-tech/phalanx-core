@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Middleware;
+namespace Convoy\Middleware;
 
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
+use Convoy\ExecutionScope;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
 
 interface TaskMiddleware
 {

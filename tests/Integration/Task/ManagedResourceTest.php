@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Integration\Task;
+namespace Convoy\Tests\Integration\Task;
 
-use Phalanx\Task\ManagedResource;
+use Convoy\Task\ManagedResource;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

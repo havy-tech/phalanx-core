@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Handler;
+namespace Convoy\Handler;
 
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
+use Convoy\ExecutionScope;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
 
 /**
  * Wraps a handler task with middleware.
@@ -48,6 +48,6 @@ final readonly class MiddlewareWrapper implements Executable
 
         $stack = $this->buildStack($this->handler, $this->middleware);
 
-        return ($stack)($scope);
+        return $scope->execute($stack);
     }
 }

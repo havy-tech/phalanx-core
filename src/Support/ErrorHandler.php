@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Support;
+namespace Convoy\Support;
 
 final class ErrorHandler
 {

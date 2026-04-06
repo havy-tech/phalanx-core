@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Unit\Concurrency;
+namespace Convoy\Tests\Unit\Concurrency;
 
-use Phalanx\Concurrency\RetryPolicy;
-use Phalanx\Exception\CancelledException;
+use Convoy\Concurrency\RetryPolicy;
+use Convoy\Exception\CancelledException;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx;
+namespace Convoy;
 
-use Phalanx\Concurrency\CancellationToken;
-use Phalanx\Service\ServiceBundle;
-use Phalanx\Trace\Trace;
+use Convoy\Concurrency\CancellationToken;
+use Convoy\Service\ServiceBundle;
+use Convoy\Trace\Trace;
 
 interface AppHost
 {
@@ -15,10 +15,7 @@ interface AppHost
 
     public function createScope(?CancellationToken $token = null): ExecutionScope;
 
-    public function startup(): static;
-
-    /** @return array{0: static, 1: \Phalanx\ExecutionScope} */
-    public function boot(?CancellationToken $token = null): array;
+    public function startup(): void;
 
     public function shutdown(): void;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Lifecycle;
+namespace Convoy\Lifecycle;
 
 use Closure;
 
@@ -40,27 +40,27 @@ final class LifecycleCallbacks
 
     public function hasInit(): bool
     {
-        return $this->onInit !== [];
+        return count($this->onInit) > 0;
     }
 
     public function hasStartup(): bool
     {
-        return $this->onStartup !== [];
+        return count($this->onStartup) > 0;
     }
 
     public function hasReady(): bool
     {
-        return $this->onReady !== [];
+        return count($this->onReady) > 0;
     }
 
     public function hasDispose(): bool
     {
-        return $this->onDispose !== [];
+        return count($this->onDispose) > 0;
     }
 
     public function hasShutdown(): bool
     {
-        return $this->onShutdown !== [];
+        return count($this->onShutdown) > 0;
     }
 
     public function merge(self $other): self

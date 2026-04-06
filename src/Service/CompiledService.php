@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
 use Closure;
-use Phalanx\Lifecycle\LifecycleCallbacks;
-use Phalanx\Support\ClassNames;
+use Convoy\Lifecycle\LifecycleCallbacks;
+use Convoy\Support\ClassNames;
 
 final readonly class CompiledService
 {

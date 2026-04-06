@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Phalanx;
+namespace Convoy;
 
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
 
 interface WorkerDispatch
 {
     public function inWorker(Scopeable|Executable $task, ExecutionScope $scope): mixed;
-
-    public function shutdown(): void;
 }

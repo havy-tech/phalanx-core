@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Lifecycle;
+namespace Convoy\Lifecycle;
 
 enum LifecyclePhase: string
 {

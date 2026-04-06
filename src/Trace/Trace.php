@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Trace;
+namespace Convoy\Trace;
 
 final class Trace
 {
@@ -32,7 +32,7 @@ final class Trace
     /** @param array<string, mixed> $context */
     public static function fromContext(array $context, ?string $applicationPath = null): self
     {
-        $envValue = $context["PHALANX_TRACE"] ?? false;
+        $envValue = $context["CONVOY_TRACE"] ?? false;
         $enabled = !in_array($envValue, [false, "", "0"], true);
         return new self($enabled, $applicationPath);
     }

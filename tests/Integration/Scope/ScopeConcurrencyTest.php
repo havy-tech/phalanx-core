@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Integration\Scope;
+namespace Convoy\Tests\Integration\Scope;
 
-use Phalanx\Application;
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Task;
-use Phalanx\Tests\Support\AsyncTestCase;
+use Convoy\Application;
+use Convoy\ExecutionScope;
+use Convoy\Task\Task;
+use Convoy\Tests\Support\AsyncTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 use function React\Async\delay;
@@ -210,7 +210,7 @@ final class ScopeConcurrencyTest extends AsyncTestCase
         $this->runAsync(function () use ($app): void {
             $scope = $app->createScope();
 
-            $this->expectException(\Phalanx\Exception\CancelledException::class);
+            $this->expectException(\Convoy\Exception\CancelledException::class);
 
             $scope->timeout(0.01, Task::of(static function () {
                 delay(1.0);

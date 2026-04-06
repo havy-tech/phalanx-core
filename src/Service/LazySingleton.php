@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
-use Phalanx\Support\ErrorHandler;
-use Phalanx\Trace\Trace;
-use Phalanx\Trace\TraceType;
+use Convoy\Support\ErrorHandler;
+use Convoy\Trace\Trace;
+use Convoy\Trace\TraceType;
 
 final class LazySingleton
 {
@@ -145,18 +145,7 @@ final class LazySingleton
         $factory = $compiled->factory;
 
         if ($compiled->lazy) {
-            $lifecycle = $compiled->lifecycle;
-            return LazyFactory::wrap(
-                $compiled->type,
-                static function () use ($factory, $deps, $lifecycle): object {
-                    $instance = $factory(...$deps);
-                    foreach ($lifecycle->onInit as $hook) {
-                        $hook($instance);
-                    }
-                    return $instance;
-                },
-                $this->trace,
-            );
+            return LazyFactory::wrap($compiled->type, static fn() => $factory(...$deps), $this->trace);
         }
 
         $this->trace->log(TraceType::ServiceInit, $compiled->shortName());

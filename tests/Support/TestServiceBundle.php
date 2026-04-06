@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Support;
+namespace Convoy\Tests\Support;
 
 use Closure;
-use Phalanx\Service\ServiceBundle;
-use Phalanx\Service\ServiceCatalog;
-use Phalanx\Service\Services;
+use Convoy\Service\ServiceBundle;
+use Convoy\Service\ServiceCatalog;
+use Convoy\Service\Services;
 
 final class TestServiceBundle implements ServiceBundle
 {

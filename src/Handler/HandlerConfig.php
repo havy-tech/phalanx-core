@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Handler;
+namespace Convoy\Handler;
 
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
 
 /**
  * Base configuration for handlers.

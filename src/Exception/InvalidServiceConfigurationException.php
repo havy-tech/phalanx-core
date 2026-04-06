@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Exception;
+namespace Convoy\Exception;
 
 class InvalidServiceConfigurationException extends \LogicException
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Unit\Task;
+namespace Convoy\Tests\Unit\Task;
 
-use Phalanx\Concurrency\RetryPolicy;
-use Phalanx\Task\Pool;
-use Phalanx\Task\TaskConfig;
+use Convoy\Concurrency\RetryPolicy;
+use Convoy\Task\Pool;
+use Convoy\Task\TaskConfig;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

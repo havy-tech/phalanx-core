@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Handler;
+namespace Convoy\Handler;
 
-use Phalanx\ExecutionScope;
+use Convoy\ExecutionScope;
 
 final readonly class MatchResult
 {

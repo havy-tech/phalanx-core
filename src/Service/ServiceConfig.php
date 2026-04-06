@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
 use Closure;
 

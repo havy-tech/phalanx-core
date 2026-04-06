@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Task;
+namespace Convoy\Task;
 
 use Closure;
-use Phalanx\Support\ErrorHandler;
+use Convoy\Support\ErrorHandler;
 use ReflectionClass;
 use WeakMap;
 

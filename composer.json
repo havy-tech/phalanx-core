@@ -1,5 +1,5 @@
 {
-    "name": "phalanx/core",
+    "name": "convoy/core",
     "description": "Expression-based async coordination for PHP 8.4+",
     "license": "MIT",
     "type": "library",
@@ -12,7 +12,7 @@
         "parallel",
         "event-loop"
     ],
-    "homepage": "https://github.com/havy-tech/phalanx-core",
+    "homepage": "https://github.com/havy-tech/convoy-core",
     "authors": [
         {
             "name": "Jonathan Havens",
@@ -26,9 +26,9 @@
         "react/promise": "^3.2"
     },
     "require-dev": {
-        "phalanx/console": "^0.5",
-        "phalanx/http": "^0.5",
-        "phalanx/parallel": "^0.5",
+        "convoy/console": "^1.0",
+        "convoy/http": "^1.0",
+        "convoy/parallel": "^1.0",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11.0",
         "react/promise-timer": "^1.11",
@@ -44,10 +44,10 @@
         "test": "php vendor/bin/phpunit"
     },
     "suggest": {
-        "phalanx/stream": "Reactive stream primitives (Emitter, ScopedStream, Channel)",
-        "phalanx/console": "CLI application framework",
-        "phalanx/http": "HTTP server framework",
-        "phalanx/parallel": "Worker process parallelism",
+        "convoy/stream": "Reactive stream primitives (Emitter, ScopedStream, Channel)",
+        "convoy/console": "CLI application framework",
+        "convoy/http": "HTTP server framework",
+        "convoy/parallel": "Worker process parallelism",
         "react/http": "Required for HttpRunner",
         "spatie/backtrace": "Enhanced stack traces",
         "symfony/runtime": "For symfony/runtime integration",
@@ -55,21 +55,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Phalanx\\": "src/"
+            "Convoy\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phalanx\\Tests\\": "tests/"
+            "Convoy\\Tests\\": "tests/"
         },
         "classmap": [
             "tests/Support/Fixtures/"
         ]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-main": "0.5.x-dev"
-        }
     },
     "config": {
         "sort-packages": true,

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Support\Fixtures;
+namespace Convoy\Tests\Support\Fixtures;
 
-use Phalanx\Scope;
-use Phalanx\Task\Scopeable;
+use Convoy\Scope;
+use Convoy\Task\Scopeable;
 
 final readonly class AddNumbers implements Scopeable
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Task;
+namespace Convoy\Task;
 
-use Phalanx\Concurrency\RetryPolicy;
+use Convoy\Concurrency\RetryPolicy;
 
 interface Retryable
 {

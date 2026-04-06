@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Support;
+namespace Convoy\Support;
 
 use Closure;
-use Phalanx\Concurrency\CancellationToken;
-use Phalanx\Concurrency\RetryPolicy;
-use Phalanx\Concurrency\SettlementBag;
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
-use Phalanx\Trace\Trace;
-use React\Promise\PromiseInterface;
+use Convoy\Concurrency\CancellationToken;
+use Convoy\Concurrency\RetryPolicy;
+use Convoy\Concurrency\SettlementBag;
+use Convoy\ExecutionScope;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
+use Convoy\Trace\Trace;
 
 /**
  * Delegates all ExecutionScope methods to an inner scope.
@@ -64,9 +63,9 @@ trait ExecutionScopeDelegate
         return $this->innerScope()->any($tasks);
     }
 
-    public function map(iterable $items, Closure $fn, int $limit = 10, ?Closure $onEach = null): array
+    public function map(array $items, Closure $fn, int $limit = 10): array
     {
-        return $this->innerScope()->map($items, $fn, $limit, $onEach);
+        return $this->innerScope()->map($items, $fn, $limit);
     }
 
     /** @param list<Scopeable|Executable> $tasks */
@@ -135,16 +134,6 @@ trait ExecutionScopeDelegate
     public function inWorker(Scopeable|Executable $task): mixed
     {
         return $this->innerScope()->inWorker($task);
-    }
-
-    public function singleflight(string $key, Scopeable|Executable $task): mixed
-    {
-        return $this->innerScope()->singleflight($key, $task);
-    }
-
-    public function await(PromiseInterface $promise): mixed
-    {
-        return $this->innerScope()->await($promise);
     }
 
     abstract protected function innerScope(): ExecutionScope;

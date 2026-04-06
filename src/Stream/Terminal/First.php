@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Stream\Terminal;
+namespace Convoy\Stream\Terminal;
 
-use Phalanx\Stream\Contract\StreamContext;
-use Phalanx\Stream\Contract\StreamSource;
+use Convoy\Stream\Contract\StreamContext;
+use Convoy\Stream\Contract\StreamSource;
 
 final readonly class First
 {

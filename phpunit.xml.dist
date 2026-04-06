@@ -34,6 +34,6 @@
     </source>
 
     <php>
-        <env name="PHALANX_TRACE" value="0"/>
+        <env name="CONVOY_TRACE" value="0"/>
     </php>
 </phpunit>

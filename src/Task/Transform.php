@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Task;
+namespace Convoy\Task;
 
 use Closure;
-use Phalanx\Scope;
+use Convoy\Scope;
 
 final readonly class Transform implements Scopeable
 {

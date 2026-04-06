@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Phalanx;
+namespace Convoy;
 
 use Closure;
-use Phalanx\Middleware\ServiceTransformationMiddleware;
-use Phalanx\Middleware\TaskMiddleware;
-use Phalanx\Service\LazySingleton;
-use Phalanx\Service\ServiceBundle;
-use Phalanx\Service\ServiceCatalog;
-use Phalanx\Service\ServiceGraph;
-use Phalanx\Service\ServiceGraphCompiler;
-use Phalanx\Trace\Trace;
-use Phalanx\Trace\TraceType;
+use Convoy\Middleware\ServiceTransformationMiddleware;
+use Convoy\Middleware\TaskMiddleware;
+use Convoy\Service\LazySingleton;
+use Convoy\Service\ServiceBundle;
+use Convoy\Service\ServiceCatalog;
+use Convoy\Service\ServiceGraph;
+use Convoy\Service\ServiceGraphCompiler;
+use Convoy\Trace\Trace;
+use Convoy\Trace\TraceType;
 
 final class ApplicationBuilder
 {
@@ -108,14 +108,7 @@ final class ApplicationBuilder
             ? ($this->workerDispatch)($graph, $singletons)
             : $this->workerDispatch;
 
-        return Application::create(
-            $graph,
-            $singletons,
-            $trace,
-            $this->providers,
-            $this->taskInterceptors,
-            $workerDispatch,
-        );
+        return Application::create($graph, $singletons, $trace, $this->providers, $this->taskInterceptors, $workerDispatch);
     }
 
     private function loadDiscoveredProviders(): void
@@ -127,7 +120,7 @@ final class ApplicationBuilder
             return;
         }
 
-        $providersFile = $vendorPath . '/phalanx/providers.php';
+        $providersFile = $vendorPath . '/convoy/providers.php';
         if (!file_exists($providersFile)) {
             return;
         }

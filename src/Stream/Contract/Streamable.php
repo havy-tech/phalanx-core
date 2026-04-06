@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Stream\Contract;
+namespace Convoy\Stream\Contract;
 
 trait Streamable
 {

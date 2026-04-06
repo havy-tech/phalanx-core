@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Trace;
+namespace Convoy\Trace;
 
 enum TraceType: string
 {
@@ -17,5 +17,4 @@ enum TraceType: string
     case ServiceDispose = 'SVC-';
     case LifecycleStartup = 'STRT';
     case LifecycleShutdown = 'STOP';
-    case Suspend = 'SUSP';
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Task;
+namespace Convoy\Task;
 
 interface HasTimeout
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
 use Closure;
-use Phalanx\Support\ClassNames;
-use Phalanx\Trace\Trace;
-use Phalanx\Trace\TraceType;
+use Convoy\Support\ClassNames;
+use Convoy\Trace\Trace;
+use Convoy\Trace\TraceType;
 use ReflectionClass;
 
 final class LazyFactory
@@ -18,20 +18,15 @@ final class LazyFactory
         /** @var \ReflectionClass<object> $ref */
         $ref = new ReflectionClass($type);
 
-        /**
-         * final/internal/interface/abstract cannot have lazy ghosts — falls back to eager.
-         *
-         * @see https://www.php.net/manual/en/reflectionclass.newlazyghost.php
-         */
         if ($ref->isFinal() || $ref->isInternal() || $ref->isInterface() || $ref->isAbstract()) {
             $trace->log(TraceType::ServiceInit, ClassNames::short($type));
             return $factory();
         }
 
         return $ref->newLazyGhost(static function (object $ghost) use ($factory, $type, $trace, $ref): void {
-            $real = $factory();
-
             $trace->log(TraceType::ServiceInit, ClassNames::short($type));
+
+            $real = $factory();
 
             foreach ($ref->getProperties() as $prop) {
                 if ($prop->isStatic()) {

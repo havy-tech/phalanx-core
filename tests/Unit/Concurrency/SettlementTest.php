@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Unit\Concurrency;
+namespace Convoy\Tests\Unit\Concurrency;
 
-use Phalanx\Concurrency\Settlement;
-use Phalanx\Concurrency\SettlementBag;
+use Convoy\Concurrency\Settlement;
+use Convoy\Concurrency\SettlementBag;
 use LogicException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
 use Closure;
-use Phalanx\Concurrency\CancellationToken;
-use Phalanx\Concurrency\RetryPolicy;
-use Phalanx\Concurrency\SettlementBag;
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Executable;
-use Phalanx\Task\Scopeable;
-use Phalanx\Trace\Trace;
-use React\Promise\PromiseInterface;
+use Convoy\Concurrency\CancellationToken;
+use Convoy\Concurrency\RetryPolicy;
+use Convoy\Concurrency\SettlementBag;
+use Convoy\ExecutionScope;
+use Convoy\Task\Executable;
+use Convoy\Task\Scopeable;
+use Convoy\Trace\Trace;
 use RuntimeException;
 
 final class DeferredScope implements ExecutionScope
@@ -61,9 +60,9 @@ final class DeferredScope implements ExecutionScope
      * @param array<string|int, mixed> $items
      * @return array<string|int, mixed>
      */
-    public function map(iterable $items, Closure $fn, int $limit = 10, ?Closure $onEach = null): array
+    public function map(array $items, Closure $fn, int $limit = 10): array
     {
-        return $this->scope()->map($items, $fn, $limit, $onEach);
+        return $this->scope()->map($items, $fn, $limit);
     }
 
     /**
@@ -143,16 +142,6 @@ final class DeferredScope implements ExecutionScope
     public function inWorker(Scopeable|Executable $task): mixed
     {
         return $this->scope()->inWorker($task);
-    }
-
-    public function singleflight(string $key, Scopeable|Executable $task): mixed
-    {
-        return $this->scope()->singleflight($key, $task);
-    }
-
-    public function await(PromiseInterface $promise): mixed
-    {
-        return $this->scope()->await($promise);
     }
 
     private function scope(): ExecutionScope

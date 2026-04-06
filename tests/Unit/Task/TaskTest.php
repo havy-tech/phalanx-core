@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Tests\Unit\Task;
+namespace Convoy\Tests\Unit\Task;
 
-use Phalanx\ExecutionScope;
-use Phalanx\Task\Task;
-use Phalanx\Task\TaskConfig;
+use Convoy\ExecutionScope;
+use Convoy\Task\Task;
+use Convoy\Task\TaskConfig;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phalanx\Service;
+namespace Convoy\Service;
 
-use Phalanx\Exception\ServiceNotFoundException;
+use Convoy\Exception\ServiceNotFoundException;
 
 final readonly class ServiceGraph
 {

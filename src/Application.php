@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Phalanx;
+namespace Convoy;
 
-use Phalanx\Concurrency\CancellationToken;
-use Phalanx\Middleware\TaskMiddleware;
-use Phalanx\Service\LazySingleton;
-use Phalanx\Service\ServiceBundle;
-use Phalanx\Service\ServiceGraph;
-use Phalanx\Task\ManagedResource;
-use Phalanx\Trace\Trace;
+use Convoy\Concurrency\CancellationToken;
+use Convoy\Middleware\TaskMiddleware;
+use Convoy\Service\LazySingleton;
+use Convoy\Service\ServiceBundle;
+use Convoy\Service\ServiceGraph;
+use Convoy\Task\ManagedResource;
+use Convoy\Trace\Trace;
 
 final class Application implements AppHost
 {
@@ -79,24 +79,15 @@ final class Application implements AppHost
         );
     }
 
-    public function startup(): static
+    public function startup(): void
     {
         if ($this->started) {
-            return $this;
+            return;
         }
 
         $this->started = true;
         ManagedResource::enableShutdownFlush();
         $this->singletons->startup();
-
-        return $this;
-    }
-
-    public function boot(?CancellationToken $token = null): array
-    {
-        $this->startup();
-
-        return [$this, $this->createScope($token)];
     }
 
     public function shutdown(): void

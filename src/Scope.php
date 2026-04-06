@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phalanx;
+namespace Convoy;
 
-use Phalanx\Trace\Trace;
+use Convoy\Trace\Trace;
 
 /**
  * Generic scope for service resolution and attribute passing.
